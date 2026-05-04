@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
-import { Log } from './logger';
+import type { Request, Response, NextFunction } from 'express';
+import { Log } from './logger.js';
 
 /**
  * Express middleware to log incoming requests and response times
  */
-export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
+const loggingMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const start = Date.now();
   const { method, originalUrl } = req;
 
   // Log incoming request
-  Log("backend", "info", "express-middleware", `Incoming request: ${method} ${originalUrl}`);
+  Log("backend", "info", "middleware", `Incoming request: ${method} ${originalUrl}`);
 
   // Capture response finish event
   res.on('finish', () => {
@@ -26,10 +26,12 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction) =
     Log(
       "backend", 
       level, 
-      "express-middleware", 
+      "middleware", 
       `Response: ${method} ${originalUrl} ${statusCode} - ${duration}ms`
     );
   });
 
   next();
 };
+
+export default loggingMiddleware;
