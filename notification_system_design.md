@@ -665,7 +665,7 @@ Ends up doing extra work
 This is where composite index helps a lot
 
 4. Optimized Approach
-✅ Step 1: Add Composite Index
+ Step 1: Add Composite Index
 CREATE INDEX idx_student_unread_created
 ON notifications(student_id, is_read, created_at);
 
@@ -677,12 +677,12 @@ Already sorted by created_at
 
 So:
 
-👉 No separate sorting needed
-👉 Much less scanning
+ No separate sorting needed
+ Much less scanning
 
 Basically the index becomes the query
 
-✅ Step 2: Improve Query (small but useful change)
+ Step 2: Improve Query (small but useful change)
 SELECT id, message, type, created_at
 FROM notifications
 WHERE student_id = 1042
@@ -738,7 +738,7 @@ or spend time deciding
 
 Seen this happen… not fun to debug
 
-✅ Better Approach
+ Better Approach
 
 Only index:
 
@@ -774,14 +774,14 @@ Query is correct, just not scalable initially
 Composite index = biggest improvement
 Avoid SELECT * (small but meaningful win)
 Don’t over-index (seriously)
-🎯 Honest Take
+ Honest Take
 
 Things I’d still watch:
 
 Whether ASC vs DESC matters for index usage
 If unread queries dominate → maybe partial index?
 Eventually switching to cursor-based pagination
-🚀 Where This Stands
+ Where This Stands
 
 
 Stage 4: Performance Optimization for High Traffic (More Realistic Version)
@@ -946,7 +946,7 @@ DB load drops significantly
 Response times improve
 Users get near real-time updates
 System scales much better
-🎯 Honest Thoughts
+Honest Thoughts
 
 Things that might still need tuning later:
 
@@ -955,12 +955,6 @@ WebSocket scaling (Redis Pub/Sub required)
 Pagination strategy (OFFSET → cursor eventually)
 🏁 Where You Are Now
 
-You’ve completed:
-
-Stage 1 ✅ API design
-Stage 2 ✅ DB design
-Stage 3 ✅ Query optimization
-Stage 4 ✅ Performance optimization
 
 ### Stage 5: Bulk Notification Optimization
 
